@@ -1,10 +1,11 @@
-import copyImg from '../assets/images/copy.svg';
+import copyImg from '../../assets/images/copy.svg';
+import './styles.scss';
 
-interface IRoomCode {
+interface IRoomCodeButton {
   code: string;
 }
 
-export const RoomCode = ({ code }: IRoomCode) => {
+export const RoomCodeButton = ({ code }: IRoomCodeButton) => {
   function copyRoomCodeToClipboard() {
     navigator.clipboard.writeText(code);
   }

@@ -1,5 +1,8 @@
+import { useAuth } from 'contexts/AuthContext';
 import { useEffect, useState } from 'react';
 import { database } from '../services/firebase';
+
+// type IFirebaseQuestions = Record<string, IResponseObject>;
 
 interface IFirebaseQuestions {
   [key: string]: IResponseObject;
@@ -13,6 +16,12 @@ interface IResponseObject {
   content: string;
   isAnswered: boolean;
   isHighlighted: boolean;
+  likes: Record<
+    string,
+    {
+      authorId: string;
+    }
+  >;
 }
 
 interface IQuestions {
@@ -24,9 +33,12 @@ interface IQuestions {
   content: string;
   isAnswered: boolean;
   isHighlighted: boolean;
+  likeCount: number;
+  likeId: string | undefined;
 }
 
 export const useRoom = (roomId: string) => {
+  const { user } = useAuth();
   const [questions, setQuestions] = useState<IQuestions[]>([]);
   const [title, setTitle] = useState('');
 
@@ -46,14 +58,22 @@ export const useRoom = (roomId: string) => {
             author: value.author,
             isHighlighted: value.isHighlighted,
             isAnswered: value.isAnswered,
+            likeCount: Object.values(value.likes ?? {}).length,
+            likeId: Object.entries(value.likes ?? {}).find(
+              ([key, like]) => like.authorId === user?.id
+            )?.[0],
           };
         }
       );
 
       setTitle(databaseRoom?.title);
       setQuestions(parsedQuestions);
+
+      return () => {
+        roomRef.off('value');
+      };
     });
-  }, [roomId]);
+  }, [roomId, user?.id]);
 
   return { questions, title };
 };
