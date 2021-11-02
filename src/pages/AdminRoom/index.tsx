@@ -5,7 +5,7 @@ import { RoomCodeButton } from 'components/RoomCodeButton';
 import { useAuth } from 'contexts/AuthContext';
 import { useRoom } from 'hooks/useRoom';
 import { Question } from 'pages/Question';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { auth, database } from 'services/firebase';
 import './styles.scss';
 
@@ -14,6 +14,7 @@ interface IRoomParams {
 }
 
 export const AdminRoom = () => {
+  const history = useHistory();
   const params = useParams<IRoomParams>();
   const roomId = params.id;
   const { user } = useAuth();
@@ -29,6 +30,14 @@ export const AdminRoom = () => {
     }
   }
 
+  async function handleCloseRoom() {
+    await database.ref(`rooms/${roomId}`).update({
+      closedAt: new Date(),
+    });
+
+    history.push('/');
+  }
+
   return (
     <div id='admin-page-room'>
       <header>
@@ -40,7 +49,9 @@ export const AdminRoom = () => {
           <RoomCodeButton code={roomId} />
 
           <div className='buttons'>
-            <Button isOutlined>Encerrar sala</Button>
+            <Button isOutlined onClick={handleCloseRoom}>
+              Encerrar sala
+            </Button>
 
             <Button onClick={signOut} disabled={!user}>
               Sign out
