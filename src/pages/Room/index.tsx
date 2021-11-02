@@ -1,18 +1,19 @@
+import logoImg from 'assets/images/logo.svg';
+import { Button } from 'components/Button';
+import { RoomCode } from 'components/RoomCode';
+import { useAuth } from 'contexts/AuthContext';
+import { useRoom } from 'hooks/useRoom';
+import { Question } from 'pages/Question';
 import { FormEvent, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import logoImg from '../assets/images/logo.svg';
-import { Button } from '../components/Button';
-import { RoomCode } from '../components/RoomCode';
-import { useAuth } from '../contexts/AuthContext';
-import { useRoom } from '../hooks/useRoom';
-import { auth, database } from '../services/firebase';
-import { Question } from './Question';
+import { auth, database } from 'services/firebase';
+import './styles.scss';
 
 interface IRoomParams {
   id: string;
 }
 
-export const AdminRoom = () => {
+export const Room = () => {
   const params = useParams<IRoomParams>();
   const roomId = params.id;
   const { user } = useAuth();

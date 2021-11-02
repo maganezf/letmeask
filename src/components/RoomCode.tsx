@@ -10,9 +10,9 @@ export const RoomCode = ({ code }: IRoomCode) => {
   }
 
   return (
-    <button className="room-code-button" onClick={copyRoomCodeToClipboard}>
+    <button className='room-code-button' onClick={copyRoomCodeToClipboard}>
       <div>
-        <img src={copyImg} alt="Copy room code" />
+        <img src={copyImg} alt='Copy room code' />
       </div>
 
       <span>Sala #{code}</span>

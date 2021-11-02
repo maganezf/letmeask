@@ -1,11 +1,12 @@
+import googleIconImg from 'assets/images/googleIcon.svg';
+import illustrationImg from 'assets/images/illustration.svg';
+import logoImg from 'assets/images/logo.svg';
+import { Button } from 'components/Button';
+import { useAuth } from 'contexts/AuthContext';
 import { FormEvent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import googleIconImg from '../assets/images/googleIcon.svg';
-import illustrationImg from '../assets/images/illustration.svg';
-import logoImg from '../assets/images/logo.svg';
-import { Button } from '../components/Button';
-import { useAuth } from '../contexts/AuthContext';
-import { database } from '../services/firebase';
+import { database } from 'services/firebase';
+import './styles.scss';
 
 export const Home = () => {
   const history = useHistory();
