@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import cx from 'classnames';
 import './styles.scss';
 
 interface IQuestionProps {
@@ -8,11 +9,25 @@ interface IQuestionProps {
     name: string;
   };
   children?: ReactNode;
+  isAnswered?: boolean;
+  isHighlighted?: boolean;
 }
 
-export const Question = ({ content, author, children }: IQuestionProps) => {
+export const Question = ({
+  content,
+  author,
+  children,
+  isAnswered = false,
+  isHighlighted = false,
+}: IQuestionProps) => {
   return (
-    <div className='question'>
+    <div
+      className={cx(
+        'question',
+        { answered: isAnswered },
+        { highlighted: isHighlighted && !isAnswered }
+      )}
+    >
       <p>{content}</p>
 
       <footer>
